@@ -4,6 +4,13 @@ pipeline {
 		stage('check file in dir') {
 			steps {
 				sh 'ls -l'
+				copyArtifacts (
+					filter: '**/*.war', 
+					fingerprintArtifacts: true,
+					projectName: 'tomcat9-deploy',
+					selector: lastSuccessful(),
+					target: './target/'
+				)
 			}
 		}
 	}
